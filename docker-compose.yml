@@ -1,0 +1,52 @@
+version: "3.7"
+services:
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        LARAVEL_VERSION: ${LARAVEL_VERSION}      
+    image: tatami
+    restart: unless-stopped
+    volumes:
+      - ./app:/var/www
+    networks:
+      - tatami
+
+  db:
+    image: mysql:5.7
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: '${MYSQL_DATABASE}'
+      MYSQL_USER: '${MYSQL_USER}'
+      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./config/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - tatami
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - tatami       
+
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./app:/var/www
+      - ./config/nginx:/etc/nginx/conf.d
+    networks:
+      - tatami
+
+networks:
+  tatami:
+    driver: bridge
