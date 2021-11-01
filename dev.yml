@@ -1,0 +1,55 @@
+version: "3.7"
+services:
+  php:
+    build:
+      context: ./
+      dockerfile: Dockerfile  
+    image: tatami-php
+    restart: unless-stopped
+    volumes:
+      - ./app:/var/www/html
+    networks:
+      - tatami-lemp
+
+  # db:
+  #   image: mysql:5.7
+  #   restart: unless-stopped
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: 'root'
+  #     MYSQL_DATABASE: '${MYSQL_DATABASE}'
+  #     MYSQL_USER: '${MYSQL_USER}'
+  #     MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - ./config/mysql:/docker-entrypoint-initdb.d
+  #   networks:
+  #     - tatami-lemp
+
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8080:8080
+  #   networks:
+  #     - tatami-lemp       
+
+  nginx:
+    build:
+      context: ./
+      dockerfile: Dockerfile-nginx
+    image: tatami-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./app:/var/www/html
+      - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./config/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - tatami-lemp
+    depends_on:
+      - php
+networks:
+  tatami-lemp:
+    driver: bridge
