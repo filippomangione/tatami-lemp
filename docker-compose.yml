@@ -1,17 +1,17 @@
 version: "3.7"
 services:
   php:
-    image: tatami-php:latest
+    image: ${APP_NAME}-php:latest
     restart: unless-stopped
     networks:
-      - tatami-lemp
+      - ${APP_NAME}-lemp
   nginx:
-    image: tatami-nginx:latest
+    image: ${APP_NAME}-nginx:latest
     restart: unless-stopped
     ports:
       - "80:80"
     networks:
-      - tatami-lemp
+      - ${APP_NAME}-lemp
     depends_on:
       - php      
 
