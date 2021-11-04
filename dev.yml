@@ -41,7 +41,7 @@ services:
     image: ${APP_NAME}-nginx
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "${NGINX_PORT}:80"
     volumes:
       - ./app:/var/www/html
       - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
