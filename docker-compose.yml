@@ -1,7 +1,7 @@
 version: "3.7"
 services:
-  php:
-    image: ${APP_NAME}-php:latest
+  app:
+    image: ${APP_NAME}-app:latest
     restart: unless-stopped
     networks:
       - ${APP_NAME}-lemp
@@ -13,7 +13,7 @@ services:
     networks:
       - ${APP_NAME}-lemp
     depends_on:
-      - php      
+      - app      
 
 networks:
   tatami-lemp:

@@ -1,11 +1,11 @@
 version: "3.7"
 
 services:
-  php:
+  app:
     build:
       context: ./
       dockerfile: Dockerfile
-    image: ${APP_NAME}-php
+    image: ${APP_NAME}-app
   nginx:
     build:
       context: ./

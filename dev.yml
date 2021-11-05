@@ -1,10 +1,10 @@
 version: "3.7"
 services:
-  php:
+  app:
     build:
       context: ./
       dockerfile: Dockerfile  
-    image: ${APP_NAME}-php
+    image: ${APP_NAME}-app
     restart: unless-stopped
     volumes:
       - ./app:/var/www/html
@@ -16,9 +16,9 @@ services:
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: '123'
-      MYSQL_DATABASE: '${MYSQL_DATABASE}'
-      MYSQL_USER: '${MYSQL_USER}'
-      MYSQL_PASSWORD: '${MYSQL_PASSWORD}'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_PASSWORD}'
+      MYSQL_PASSWORD: '${DB_USERNAME}'
     ports:
       - "3306:3306"
     # volumes:
@@ -61,7 +61,7 @@ services:
     networks:
       - ${APP_NAME}-lemp
     depends_on:
-      - php
+      - app
 networks:
   tatami-lemp:
     driver: bridge
