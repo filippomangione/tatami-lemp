@@ -9,22 +9,23 @@ services:
     volumes:
       - ./app:/var/www/html
     networks:
-      - ${APP_NAME}-lemp
+      - tatami-lemp      
 
   db:
     image: mysql:5.7.10
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: '123'
+      MYSQL_ROOT_PASSWORD: 'root'
       MYSQL_DATABASE: '${DB_DATABASE}'
-      MYSQL_USER: '${DB_PASSWORD}'
-      MYSQL_PASSWORD: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_USER: '${DB_USERNAME}'
     ports:
       - "3306:3306"
-    # volumes:
+    volumes:
     #   - ./config/mysql:/docker-entrypoint-initdb.d
+      - 'storage_mysql:/var/lib/mysql:rw'
     networks:
-      - ${APP_NAME}-lemp
+      - tatami-lemp
       
   phpmyadmin:
     image: phpmyadmin
@@ -36,7 +37,7 @@ services:
     ports:
       - "${PHPMYADMIN_PORT}:80"
     networks:
-      - ${APP_NAME}-lemp         
+      - tatami-lemp         
 
   # adminer:
   #   image: adminer
@@ -59,9 +60,12 @@ services:
       - ./config/nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./config/nginx/default.conf:/etc/nginx/conf.d/default.conf
     networks:
-      - ${APP_NAME}-lemp
+      - tatami-lemp
     depends_on:
       - app
+
 networks:
   tatami-lemp:
     driver: bridge
+volumes:
+  storage_mysql: null
