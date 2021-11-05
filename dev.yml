@@ -29,7 +29,7 @@ services:
   phpmyadmin:
     image: phpmyadmin
     environment:
-      PMA_HOST: '${MYSQL_DATABASE}'
+      PMA_HOST: '${DB_DATABASE}'
       PMA_PORT: 3306
       PMA_ARBITRARY: 1
     restart: always
