@@ -21,7 +21,12 @@ RUN docker-php-ext-install pdo_mysql mysqli mbstring exif pcntl bcmath gd
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-#WORKDIR /var/www
+# Install NodeJs
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash && \
+    apt-get install -yq nodejs build-essential
+
+# fix npm - not the latest version installed by apt-get
+RUN npm install -g npm
 
 COPY ./app /var/www/html
 
