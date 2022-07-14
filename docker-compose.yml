@@ -9,35 +9,38 @@ services:
     volumes:
       - ./app:/var/www/html
     networks:
-      - tatami-lemp      
+      - tatami-lemp  
+    depends_on:
+      - mysql      
 
-  db:
+  mysql:
     image: mysql/mysql-server:5.7.10
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: '${DB_ROOT_PASSWORD}'
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
       MYSQL_DATABASE: '${DB_DATABASE}'
-      MYSQL_PASSWORD: '${DB_PASSWORD}'
       MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1      
     ports:
       - "3306:3306"
     volumes:
     #   - ./config/mysql:/docker-entrypoint-initdb.d
-      - 'storage_mysql:/var/lib/mysql:rw'
+      - 'tatami-mysql:/var/lib/mysql:rw'
     networks:
       - tatami-lemp
 
   phpmyadmin:
     image: phpmyadmin
     environment:
-      PMA_HOST: 'db'
+      PMA_HOST: '${DB_HOST}'
     restart: always
     ports:
       - "${PHPMYADMIN_PORT}:80"
     networks:
       - tatami-lemp
     depends_on:
-      - db
+      - mysql
 
   # adminer:
   #   image: adminer
@@ -68,4 +71,5 @@ networks:
   tatami-lemp:
     driver: bridge
 volumes:
-  storage_mysql: null
+  tatami-mysql: 
+    driver: local
