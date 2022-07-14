@@ -3,11 +3,13 @@ services:
   app:
     build:
       context: .
-      dockerfile: ./docker-config/php/Dockerfile  
+      dockerfile: ./docker-config/php/Dockerfile
+      args:
+        PUBLIC_PATH: ${PUBLIC_PATH:-./app}     
     image: ${APP_NAME}-app
     restart: unless-stopped
     volumes:
-      - ./app:/var/www/html
+      - ${PUBLIC_PATH:-./app}:/var/www/html
     networks:
       - tatami-lemp  
     depends_on:
@@ -59,9 +61,9 @@ services:
     ports:
       - "${NGINX_PORT}:80"
     volumes:
-      - ./app:/var/www/html
+      - ${PUBLIC_PATH:-./app}:/var/www/html
       - ./docker-config/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./docker-config/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker-config/nginx/${NGINX_CONF:-default}.conf:/etc/nginx/conf.d/default.conf
     networks:
       - tatami-lemp
     depends_on:
