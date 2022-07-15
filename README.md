@@ -1,54 +1,51 @@
 # Tatami LEMP
 
-Docker environment per lo sviluppo di applicativi fullstack.
+This is a simple Docker setup for legacy fullstack web development environment. I needed something light and basic to run old php scripts and legacy Laravel 7 projects. **Note: this is meant just for development purpose.**
 
-Software disponibili:
+Available software:
 - NGINX
 - MySql 5.7.10
 - PHP 7
 - PHP-FPM
 - Composer
 - PhpMyAdmin
-- NodeJs 14
+- NodeJS 16
 
 ## Setup
-Scarica e installa Docker desktop in base al tuo Sistema Operativo: https://docs.docker.com/get-docker/
+Download and install Docker desktop from [here](https://docs.docker.com/get-docker/).
 
-Duplica e rinomica .env.example in .env e modifica opportunamente le variabili d'ambiente.
+Duplicate and rename .env.example as .env and change environment variables as needed.
 
-Modificare almeno `APP_NAME` da cui dipenderà il nome dell'immagine finale buildata da docker. E' possibile anche specificare delle porte differenti in caso di conflitto.
+Put all you project files into `/app` folder.
 
-## Sviluppo
-Lancia tutti i servizi tramite Docker Compose:
+## Laravel 7 Setup
+Copy all Tatami files in the root of a Laravel 7 project except `/app` folder.
+Remember to merge `.env.laravel.example` variables with Laravel `.env`.
+
+## Development
+Start all services with Docker Compose:
+
 ```
+// Start all services
+docker-compose up
+
+// use build flag if you need to rebuild images
 docker-compose up --build
 ```
 
-> Nota: la prima volta che i servizi vengono laciati il sistema impiegherà un pò di tempo in più perchè dovrà eseguire la build delle immagini. Le volte successive puoi omettere il flag `--build`.
+> Note: first time you launch servicess, images will be built; process may be slow.
 
-La root di progetto in cui inserire i tuoi file è sotto `app`.
-
-## Stop dei servizi
-Ctrl + C per fermare i container.
+## Stop all services
+```
+docker-compose down
+```
 
 
 ## Bash
-Puoi entrare nel container dell'app per eseguire comandi da linea di comando (ad es. installare una dipendenza).
+You can use a `docker-compose exec` to get an interactive prompt and access app container.
+This is very useful to run Composer and Artisan commands or npm scripts.
+When all services are up:
 
-Dopo aver lanciato i servizi esegui il comando:
 ```
 docker-compose exec app bash
 ```
-
-## Laravel
-E' possibile installare anche Laravel entranto nel container ed eseguendo una installazione con composer.
-
-Una volta installato:
-- valorizza nel `.env` di Laravel le variabili del DB che hai inserito nel `.env` principale
-- nel file di configurazione di nginx `config/nginx/default.conf` modifica il valore di `root` per specificare il path alla cartella `public` di Laravel (ad es. `/var/www/html/blog/public`)
-
-Rilanciare il servizio di nginx:
-```
-docker-compose restart nginx
-```
-
