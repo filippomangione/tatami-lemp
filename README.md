@@ -16,12 +16,12 @@ Available software:
 ## Setup
 Download and install Docker desktop from [here](https://docs.docker.com/get-docker/).
 
-Duplicate and rename .env.example as .env and change environment variables as needed.
+Duplicate and rename `.env.example` as `.env` and change environment variables as needed.
 
 Put all you project files into `/app` folder.
 
 ## Laravel 7 Setup
-Copy all Tatami files in the root of a Laravel 7 project except `/app` folder.
+Copy all Tatami files except `/app` folder in the root of a Laravel 7 project.
 Remember to merge `.env.laravel.example` variables with Laravel `.env`.
 
 ## Development
