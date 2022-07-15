@@ -1,3 +1,5 @@
+<img src="logo.jpg" alt="japanese tatami" width="50"/>
+
 # Tatami LEMP
 
 This is a simple Docker setup for legacy fullstack web development environment. I needed something light and basic to run old php scripts and legacy Laravel 7 projects. **Note: this is meant just for development purpose.**
@@ -33,7 +35,7 @@ docker-compose up
 docker-compose up --build
 ```
 
-> Note: first time you launch servicess, images will be built; process may be slow.
+> Note: first time you launch services, images will be built; process may be slow.
 
 ## Stop all services
 ```
