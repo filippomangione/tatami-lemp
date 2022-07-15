@@ -43,19 +43,7 @@ services:
       - tatami-lemp
     depends_on:
       - mysql
-
-  # adminer:
-  #   image: adminer
-  #   restart: always
-  #   ports:
-  #     - 8080:8080
-  #   networks:
-  #     - tatami-lemp       
-
   nginx:
-    # build:
-    #   context: ./
-    #   dockerfile: Dockerfile-nginx
     image: nginx:alpine
     restart: unless-stopped
     ports:
