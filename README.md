@@ -37,6 +37,11 @@ docker-compose up --build
 
 > Note: first time you launch services, images will be built; process may be slow.
 
+Your project can be reached at  `http://localhost:/ `
+
+PhpMyAdmin will be available at  `http://localhost:8081/ `
+
+
 ## Stop all services
 ```
 docker-compose down
