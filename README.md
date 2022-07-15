@@ -1,4 +1,4 @@
-<img src="logo.jpg" alt="japanese tatami" width="50"/>
+<img src="logo.jpg" alt="japanese tatami" width="100"/>
 
 # Tatami LEMP
 
