@@ -6,12 +6,11 @@ This is a simple Docker setup for legacy fullstack web development environment. 
 
 Available software:
 - NGINX
-- MySql 5.7.10
-- PHP 7
+- MariaDB
+- PHP 8
 - PHP-FPM
 - Composer
 - PhpMyAdmin
-- NodeJS 16
 
 ## Setup
 Download and install Docker desktop from [here](https://docs.docker.com/get-docker/).
@@ -19,10 +18,6 @@ Download and install Docker desktop from [here](https://docs.docker.com/get-dock
 Duplicate and rename `.env.example` as `.env` and change environment variables as needed.
 
 Put all you project files into `/app` folder.
-
-## Laravel 7 Setup
-Copy all Tatami files except `/app` folder in the root of a Laravel 7 project.
-Remember to merge `.env.laravel.example` variables with Laravel `.env`.
 
 ## Development
 Start all services with Docker Compose:
@@ -32,12 +27,12 @@ Start all services with Docker Compose:
 docker-compose up
 
 // use build flag if you need to rebuild images
-docker-compose up --build
+docker-compose build --no-cache
 ```
 
 > Note: first time you launch services, images will be built; process may be slow.
 
-Your project can be reached at  `http://localhost:/ `
+Your project can be reached at  `http://localhost:8080/ `
 
 PhpMyAdmin will be available at  `http://localhost:8081/ `
 
@@ -49,8 +44,8 @@ docker-compose down
 
 
 ## Bash
-You can use a `docker-compose exec` to get an interactive prompt and access app container.
-This is very useful to run Composer and Artisan commands or npm scripts.
+You can use `docker-compose exec` to get an interactive prompt and access app container.
+This is very useful to run Composer commands.
 When all services are up:
 
 ```

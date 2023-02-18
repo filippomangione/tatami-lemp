@@ -1,6 +1,7 @@
-FROM php:7-fpm
+FROM php:8-fpm
 
-ARG APP_PATH
+# ARG APP_PATH
+WORKDIR /var/www/html
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -22,10 +23,13 @@ RUN docker-php-ext-install pdo_mysql mysqli mbstring exif pcntl bcmath gd
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Install Node16
-RUN curl -sLS https://deb.nodesource.com/setup_16.x | bash - \
-    && apt-get install -y nodejs \
-    && npm install -g npm
+# RUN curl -sLS https://deb.nodesource.com/setup_18.x | bash - \
+#     && apt-get install -y nodejs \
+#     && npm install -g npm
 
-COPY ${APP_PATH} /var/www/html
+# COPY ${APP_PATH} /var/www/html
+
+# EXPOSE 8080
+
 
 
