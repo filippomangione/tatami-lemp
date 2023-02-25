@@ -8,12 +8,16 @@ on: workflow_dispatch
 
 jobs:
 
-  build:
-
+  just-a-test:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-      run: echo "Hello actions"
+      - run: |
+          echo "Hello Actions"
+
+  # build:
+  #   runs-on: ubuntu-latest
+    
+    # steps:
+    # - uses: actions/checkout@v3
     # - name: Build the Docker image
     #   run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
