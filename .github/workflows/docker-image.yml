@@ -22,10 +22,7 @@ jobs:
         run: |
           echo "${{ secrets.GITHUB_TOKEN }}" | docker login https://ghcr.io -u ${{ github.actor }} --password-stdin          
 
-  # build:
-  #   runs-on: ubuntu-latest
-    
-    # steps:
-    # - uses: actions/checkout@v3
-    # - name: Build the Docker image
-    #   run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      - name: Push image to Github Container Registry
+        run: |
+          docker tag tatami-lemp:2 ghcr.io/${{ github.repository_owner }}/tatami-lemp:2
+          docker push ghcr.io/${{ github.repository_owner }}/tatami-lemp:2
