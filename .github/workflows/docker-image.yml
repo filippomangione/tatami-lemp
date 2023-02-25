@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          docker compose build app
+          docker compose -f docker-compose.yml build app
 
   # build:
   #   runs-on: ubuntu-latest
