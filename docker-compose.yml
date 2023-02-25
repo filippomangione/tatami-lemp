@@ -1,56 +1,56 @@
 version: '3'
 services:
-    app:
-        build:
-            context: .
-            dockerfile: ./docker-config/base/Dockerfile
-        image: tatami-2.0/app
-        # image: ghcr.io/OWNER/IMAGE_NAME:version
-        volumes:
-            - ./app:/var/www/html
-        networks:
-            - tatami                
-    mysql:
-        image: 'mariadb:10'
-        environment:
-            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
-            MYSQL_DATABASE: '${DB_DATABASE}'
-            MYSQL_USER: '${DB_USERNAME}'
-            MYSQL_PASSWORD: '${DB_PASSWORD}'
-            MYSQL_ALLOW_EMPTY_PASSWORD: 1
-        ports:
-            - '3306:3306'
-        volumes:
-            # - ./config/mysql:/docker-entrypoint-initdb.d
-            - 'tatami-mysql:/var/lib/mysql:rw'
-        networks:
-            - tatami
-    phpmyadmin:
-        image: phpmyadmin
-        environment:
-            PMA_HOST: '${DB_HOST}'
-        ports:
-            - '${PHPMYADMIN_PORT-8081}:80'
-        networks:
-            - tatami
-        depends_on:
-            - mysql
-    nginx:
-        image: nginx:alpine
-        ports:
-            - '${NGINX_PORT-8080}:80'
-        volumes:
-            - ./app:/var/www/html
-            - ./docker-config/nginx/nginx.conf:/etc/nginx/nginx.conf
-            - ./docker-config/nginx/default.conf:/etc/nginx/conf.d/default.conf
-        networks:
-            - tatami
-        depends_on:
-            - app
+  app:
+    build:
+      context: .
+      dockerfile: ./docker-config/base/Dockerfile
+    image: 'tatami-lemp:2'
+    # image: ghcr.io/OWNER/IMAGE_NAME:version
+    volumes:
+      - ./app:/var/www/html
+    networks:
+      - tatami
+  mysql:
+    image: 'mariadb:10'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    ports:
+      - '3306:3306'
+    volumes:
+      # - ./config/mysql:/docker-entrypoint-initdb.d
+      - 'tatami-mysql:/var/lib/mysql:rw'
+    networks:
+      - tatami
+  phpmyadmin:
+    image: phpmyadmin
+    environment:
+      PMA_HOST: '${DB_HOST}'
+    ports:
+      - '${PHPMYADMIN_PORT-8081}:80'
+    networks:
+      - tatami
+    depends_on:
+      - mysql
+  nginx:
+    image: nginx:alpine
+    ports:
+      - '${NGINX_PORT-8080}:80'
+    volumes:
+      - ./app:/var/www/html
+      - ./docker-config/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker-config/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - tatami
+    depends_on:
+      - app
 
 networks:
-    tatami:
-        driver: bridge
+  tatami:
+    driver: bridge
 volumes:
-    tatami-mysql:
-        driver: local
+  tatami-mysql:
+    driver: local

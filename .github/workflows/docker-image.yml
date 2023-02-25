@@ -8,11 +8,11 @@ on: workflow_dispatch
 
 jobs:
 
-  just-a-test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "Hello Actions"
+          docker compose version
 
   # build:
   #   runs-on: ubuntu-latest
