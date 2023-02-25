@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Build Tatami image
 
 on: workflow_dispatch
   # push:
@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          docker compose version
+          docker compose build app
 
   # build:
   #   runs-on: ubuntu-latest
