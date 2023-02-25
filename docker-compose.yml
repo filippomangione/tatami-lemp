@@ -5,7 +5,6 @@ services:
       context: .
       dockerfile: ./docker-config/base/Dockerfile
     image: 'tatami-lemp:2'
-    # image: ghcr.io/OWNER/IMAGE_NAME:version
     volumes:
       - ./app:/var/www/html
     networks:
